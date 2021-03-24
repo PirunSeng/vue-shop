@@ -1,7 +1,7 @@
 <template>
-  <navbar :cart="cart" />
+  <navbar :cart="cart" :cartTotal="cartTotal" :cartQty="cartQty" />
   <div class="container">
-    <router-view :cart="cart" @addToCart="addToCart" :products="products" />
+    <router-view :cart="cart" @addItem="addItem" :products="products" />
   </div>
 </template>
 
@@ -25,11 +25,37 @@ export default {
         this.products = data
       })
   },
+  computed: {
+    cartTotal() {
+      let sum = 0
+      for (let key in this.cart) {
+        sum = sum + this.cart[key].product.price * this.cart[key].qty
+      }
+      return sum
+    },
+    cartQty() {
+      let qty = 0
+      for (let key in this.cart) {
+        qty = qty + this.cart[key].qty
+      }
+      return qty
+    }
+  },
   methods: {
-    addToCart(product) {
-      this.cart.push(product)
-      if (this.cartTotal >= 100) {
-        this.salesBtn = 'btn-danger'
+    addItem(product) {
+      let whichProduct
+      let existing = this.cart.filter((item, index) => {
+        if (item.product.id == Number(product.id)) {
+          whichProduct = index
+          return true
+        } else {
+          return false
+        }
+      })
+      if (existing.length) {
+        this.cart[whichProduct].qty++
+      } else {
+        this.cart.push({ product, qty: 1 })
       }
     }
   }

@@ -1,15 +1,20 @@
 <template>
   <div class="dropdown-clip" v-if="cart.length > 0">
     <transition name="dropdown">
-      <div v-if="displayCart" class="list-group" aria-labelledby="cartDropdown">
-        <div
-          v-for="(item, index) in cart"
-          :key="index"
-          class="list-group-item d-flex justify-content-between"
-        >
-          <div>{{ item.name }}</div>
-          <div class="ml-3 font-weight-bold">
-            <currency :amt="item.price"></currency>
+      <div
+        v-if="displayCart"
+        class="list-group bg-white"
+        aria-labelledby="cartDropdown"
+      >
+        <div v-for="(item, index) in cart" :key="index">
+          <div class="dropdown-item-text text-nowrap text-right align-middle">
+            <span class="badge bg-success align-text-top mr-1">{{
+              item.qty
+            }}</span>
+            {{ item.product.name }}
+            <b>
+              <currency :amt="item.qty * Number(item.product.price)"></currency>
+            </b>
           </div>
         </div>
       </div>

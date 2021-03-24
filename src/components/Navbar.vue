@@ -24,7 +24,7 @@
               aria-expanded="false"
             >
               <fa icon="shopping-cart" />
-              {{ cart.length }}
+              {{ cartQty }}
             </button>
           </div>
           <cart-dropdown :cart="cart" :displayCart="displayCart" />
@@ -38,16 +38,11 @@
 import CartDropdown from '@/components/CartDropdown'
 import Currency from '@/components/Currency'
 export default {
-  props: ['cart'],
+  props: ['cart', 'cartTotal', 'cartQty'],
   data: function () {
     return { displayCart: false }
   },
   components: { Currency, CartDropdown },
-  computed: {
-    cartTotal() {
-      return this.cart.reduce((inc, item) => Number(item.price) + inc, 0)
-    }
-  },
   methods: {
     toggleCartMenu() {
       this.displayCart = !this.displayCart
