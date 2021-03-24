@@ -12,21 +12,14 @@ import RangeSelector from '@/components/RangeSelector'
 export default {
   components: { ProductList, RangeSelector },
   name: 'Home',
+  props: ['products'],
   data: function () {
     return {
       max: 50,
-      cart: [],
-      displayCart: false,
-      products: []
+      cart: []
     }
   },
-  created() {
-    fetch('https://hplussport.com/api/products/order/price')
-      .then(response => response.json())
-      .then(data => {
-        this.products = data
-      })
-  },
+
   computed: {
     filteredProducts() {
       return this.products.filter(item => item.price < Number(this.max))
