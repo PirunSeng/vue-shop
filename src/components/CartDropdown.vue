@@ -15,8 +15,19 @@
             <b>
               <currency :amt="item.qty * Number(item.product.price)"></currency>
             </b>
+            <button
+              @click.stop="this.$parent.$emit('deleteItem', index)"
+              class="btn btn-sm btn-danger ml-2"
+            >
+              -
+            </button>
           </div>
         </div>
+        <router-link
+          to="/checkout"
+          class="btn btn-sm btn-success text-white float-right mr-2 mt-2"
+          >Checkout</router-link
+        >
       </div>
     </transition>
   </div>
@@ -26,7 +37,8 @@
 import Currency from '@/components/Currency'
 export default {
   props: ['cart', 'displayCart'],
-  components: { Currency }
+  components: { Currency },
+  emits: ['deleteItem']
 }
 </script>
 
